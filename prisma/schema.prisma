@@ -1,0 +1,87 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./db/test.db"
+}
+
+model Site {
+  id String @id @default(uuid())
+  name String
+  description String
+  location String
+
+  site_images SiteImage[]
+}
+
+model SiteImage {
+  id Int @id @default(autoincrement())
+  url String
+  site_id String
+
+  site Site @relation(fields: [site_id], references: [id])
+}
+
+model Hotel {
+  id String @id @default(uuid())
+  name String
+  description String
+  location String
+  contact String
+
+  hotel_images HotelImage[]
+}
+
+model HotelImage {
+  id Int @id @default(autoincrement())
+  url String
+  hotel_id String
+
+  hotel Hotel @relation(fields: [hotel_id], references: [id])
+}
+
+
+model Restaurant {
+  id String @id @default(uuid())
+  name String
+  description String
+  location String
+  contact String
+
+  restaurant_images RestaurantImage[]
+  restaurant_menu RestaurantMenu[]
+}
+
+model RestaurantImage {
+  id Int @id @default(autoincrement())
+  url String
+  restaurant_id String
+
+  restaurant Restaurant @relation(fields: [restaurant_id], references: [id])
+}
+
+model RestaurantMenu {
+  id Int @id @default(autoincrement())
+  restaurant_id String
+
+  menu_items MenuItem[]
+
+  restaurant Restaurant @relation(fields: [restaurant_id], references: [id])
+}
+
+model MenuItem {
+  id Int @id @default(autoincrement())
+  name String
+  price Float
+  menu_id Int
+
+  menu RestaurantMenu @relation(fields: [menu_id], references: [id])
+}
