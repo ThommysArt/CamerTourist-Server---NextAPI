@@ -7,8 +7,8 @@ export default async function handler (
     const prisma = db()
     try {
         if (req.method === "GET") {
-            const sites = await prisma.siteImage.findMany()
-            return res.status(200).json({message: "Success!", sites: sites})
+            const hotel_images = await prisma.siteImage.findMany()
+            return res.status(200).json({message: "Success!", hotel_images})
         }
         else if (req.method === "POST") {
             await prisma.hotelImage.create({

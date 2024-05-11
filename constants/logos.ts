@@ -1,0 +1,1 @@
+export const LIGHT_LOGO = "/CamerTourist.svg"
